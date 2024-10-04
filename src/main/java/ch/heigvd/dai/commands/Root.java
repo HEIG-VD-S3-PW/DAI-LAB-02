@@ -5,7 +5,9 @@ import picocli.CommandLine;
 @CommandLine.Command(
         description = "A small CLI to encrypt and decrypt files.",
         version = "1.0.0",
-        subcommands = {},
+        subcommands = {
+                Encrypt.class
+        },
         scope = CommandLine.ScopeType.INHERIT,
         mixinStandardHelpOptions = true)
 public class Root {
