@@ -1,6 +1,7 @@
 package ch.heigvd.dai.commands;
 
 import ch.heigvd.dai.algorithm.Algorithm;
+import ch.heigvd.dai.commands.converter.IAlgorithmConverter;
 import picocli.CommandLine;
 
 @CommandLine.Command(
@@ -20,7 +21,8 @@ public class Root {
     @CommandLine.Option(
             names = {"-a", "--algorithm"},
             description = "The algorithm to use (possible values: ${COMPLETION-CANDIDATES}).",
-            required = true)
+            required = true,
+            converter = IAlgorithmConverter.class)
     protected Algorithm algorithm;
 
 
