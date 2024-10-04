@@ -1,5 +1,8 @@
 package ch.heigvd.dai.commands;
 
+import ch.heigvd.dai.algorithm.AES;
+import ch.heigvd.dai.algorithm.Algorithm;
+import ch.heigvd.dai.file.FileManager;
 import picocli.CommandLine;
 
 import java.util.concurrent.Callable;
@@ -14,7 +17,13 @@ public class Encrypt implements Callable<Integer> {
 
     @Override
     public Integer call() {
-        System.out.println("Encrypting file...");
+
+        FileManager fileManager = new FileManager(root.getFilename(), root.getFilename() + ".encrypted");
+        fileManager.read();
+
+        Algorithm algorithm = root.getAlgorithm();
+        fileManager.write(algorithm.encrypt(fileManager.getData(), "key"));
+
         return 0;
     }
 }
