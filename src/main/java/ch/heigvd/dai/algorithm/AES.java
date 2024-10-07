@@ -8,8 +8,8 @@ import java.security.MessageDigest;
 import java.util.Arrays;
 
 /*
-    * AES is a symmetric encryption algorithm.
-    * Sources used: https://medium.com/@deepak.sirohi9188/java-aes-encryption-and-decryption-1b30c9a5d900
+ * AES is a symmetric encryption algorithm.
+ * Sources used: https://medium.com/@deepak.sirohi9188/java-aes-encryption-and-decryption-1b30c9a5d900
  */
 
 public class AES extends Algorithm {
@@ -29,7 +29,7 @@ public class AES extends Algorithm {
     }
 
     private IvParameterSpec generateIv() {
-        byte[] iv = new byte[32]; // 32 bytes = 256 bits for AES
+        byte[] iv = new byte[16];
         new java.security.SecureRandom().nextBytes(iv);
         return new IvParameterSpec(iv);
     }
@@ -62,7 +62,7 @@ public class AES extends Algorithm {
             SecretKeySpec secretKey = generateKey(key);
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 
-            byte[] iv = Arrays.copyOfRange(bytesToDecrypt, 0, 16);
+            byte[] iv = Arrays.copyOfRange(bytesToDecrypt, 0, 16); // Ensure 16 bytes are extracted
             byte[] encryptedBytes = Arrays.copyOfRange(bytesToDecrypt, 16, bytesToDecrypt.length);
 
             IvParameterSpec ivSpec = new IvParameterSpec(iv);
