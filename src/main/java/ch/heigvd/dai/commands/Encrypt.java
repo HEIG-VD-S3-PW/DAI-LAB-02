@@ -3,6 +3,7 @@ package ch.heigvd.dai.commands;
 import ch.heigvd.dai.algorithm.AES;
 import ch.heigvd.dai.algorithm.Algorithm;
 import ch.heigvd.dai.file.FileManager;
+import ch.heigvd.dai.algorithm.RandomPassphraseGenerator;
 import picocli.CommandLine;
 
 import java.util.concurrent.Callable;
@@ -22,6 +23,7 @@ public class Encrypt implements Callable<Integer> {
         fileManager.read();
 
         Algorithm algorithm = root.getAlgorithm();
+        System.out.println("Randomly generated passphrase: " + RandomPassphraseGenerator.generator());
         fileManager.write(algorithm.encrypt(fileManager.getData(), "key"));
 
         return 0;

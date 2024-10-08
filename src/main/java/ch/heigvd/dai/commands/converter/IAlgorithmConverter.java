@@ -7,7 +7,7 @@ import picocli.CommandLine.ITypeConverter;
 
 public class IAlgorithmConverter implements ITypeConverter<Algorithm> {
     public Algorithm convert(String value) throws Exception {
-        if (value.equals("AES")) {
+        if (value.equals("AES") || value.isEmpty()) {
             return new AES();
         }
         if (value.equals("DES")){
