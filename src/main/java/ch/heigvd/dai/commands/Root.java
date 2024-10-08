@@ -20,10 +20,16 @@ public class Root {
 
     @CommandLine.Option(
             names = {"-a", "--algorithm"},
-            description = "The algorithm to use (possible values: ${COMPLETION-CANDIDATES}).",
-            required = true,
+            description = "The algorithm to use (possible values: ${COMPLETION-CANDIDATES}, default value: AES).",
+            required = false,
             converter = IAlgorithmConverter.class)
     protected Algorithm algorithm;
+
+    @CommandLine.Option(
+            names = {"-p", "--passphrase"},
+            description = "The passphrase to use (Will be randomly generated if left empty).",
+            required = false)
+    protected String passphrase;
 
 
     public String getFilename() {
