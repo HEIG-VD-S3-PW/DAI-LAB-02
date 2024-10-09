@@ -8,7 +8,12 @@ import ch.heigvd.dai.file.FileManager;
 import picocli.CommandLine;
 
 import java.io.File;
+import java.util.Objects;
 import java.util.concurrent.Callable;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
 
 @CommandLine.Command(
         name = "decrypt",
@@ -28,7 +33,18 @@ public class Decrypt implements Callable<Integer> {
 
         Algorithm algorithm = root.getAlgorithm();
 
-        fileManager.write(algorithm.decrypt(fileManager.getData(), "key"));
+        while(Objects.isNull(root.passphrase)){
+            System.out.print("Enter the passphrase to decrypt the file: ");
+
+            try {
+                BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+                root.passphrase = bufferRead.readLine();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        fileManager.write(algorithm.decrypt(fileManager.getData(), root.passphrase));
 
 
         return 0;
