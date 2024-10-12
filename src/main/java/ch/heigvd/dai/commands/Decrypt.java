@@ -1,19 +1,14 @@
 package ch.heigvd.dai.commands;
 
-import picocli.CommandLine;
-
-import ch.heigvd.dai.algorithm.AES;
 import ch.heigvd.dai.algorithm.Algorithm;
 import ch.heigvd.dai.file.FileManager;
 import picocli.CommandLine;
 
-import java.io.File;
-import java.util.Objects;
-import java.util.concurrent.Callable;
-
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.BufferedReader;
+import java.util.Objects;
+import java.util.concurrent.Callable;
 
 @CommandLine.Command(
         name = "decrypt",
@@ -21,32 +16,56 @@ import java.io.BufferedReader;
         description = "Decrypt a file.",
         mixinStandardHelpOptions = true)
 public class Decrypt implements Callable<Integer> {
-    @CommandLine.ParentCommand protected Root root;
-
+    @CommandLine.ParentCommand
+    protected Root root;
 
     @Override
     public Integer call() {
+        String inputFileName = root.getFilename();
 
-        FileManager fileManager = new FileManager(root.getFilename(), root.getFilename().replaceAll(".encrypted", ""));
+        if (!inputFileName.endsWith(".encrypted")) {
+            System.err.println("Input file must end with '.encrypted'.");
+            return 1;
+        }
 
-        fileManager.read();
+        String outputFileName = inputFileName.replace(".encrypted", "");
+
+        FileManager fileManager = new FileManager(inputFileName, outputFileName);
+
+        try {
+            fileManager.read();
+        } catch (IOException e) {
+            System.err.println("Error reading encrypted file: " + e.getMessage());
+            return 1;
+        }
 
         Algorithm algorithm = root.getAlgorithm();
 
-        while(Objects.isNull(root.passphrase)){
-            System.out.print("Enter the passphrase to decrypt the file: ");
-
+        // Prompt the user for the passphrase if not provided
+        while (root.passphrase == null || root.passphrase.isEmpty()) {
+            BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
             try {
-                BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+                System.out.print("Enter the passphrase to decrypt the file: ");
                 root.passphrase = bufferRead.readLine();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.err.println("Error reading passphrase: " + e.getMessage());
+                return 1;
             }
         }
 
-        fileManager.write(algorithm.decrypt(fileManager.getData(), root.passphrase));
+        try {
+            byte[] decryptedData = algorithm.decrypt(fileManager.getData(), root.passphrase);
 
+            fileManager.write(decryptedData);
 
-        return 0;
+            System.out.println("Decryption successful. Decrypted file: " + outputFileName);
+            return 0;
+        } catch (IOException e) {
+            System.err.println("Error writing decrypted file: " + e.getMessage());
+            return 1;
+        } catch (Exception e) {
+            System.err.println("An unexpected error occurred during decryption: " + e.getMessage());
+            return 1;
+        }
     }
 }
