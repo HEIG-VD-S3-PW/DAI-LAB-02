@@ -5,14 +5,22 @@ import ch.heigvd.dai.commands.converter.IAlgorithmConverter;
 import picocli.CommandLine;
 
 @CommandLine.Command(
-        description = "A small CLI to encrypt and decrypt files.",
+        mixinStandardHelpOptions = true,
+        name = "Ammar",
         version = "1.0.0",
+        description = "A command-line utility to encrypt and decrypt files using AES or DES encryption algorithms.",
+        headerHeading = "\n======= File Encryption CLI =======\n\n",  // Ensures header separation
+        header = "Encrypt and decrypt files securely using AES or DES.",
+        footer = "\nCredits: Tristan Baud and Mathieu Emery",
+        synopsisHeading = "\nUsage: ",
+        descriptionHeading = "\nDescription:\n",
+        parameterListHeading = "\nArguments:\n",
+        optionListHeading = "\nOptions:\n",
+        commandListHeading = "\nCommands:\n",
         subcommands = {
-                Encrypt.class,
-                Decrypt.class
-        },
-        scope = CommandLine.ScopeType.INHERIT,
-        mixinStandardHelpOptions = true)
+                Encrypt.class,  // Subcommand for encryption
+                Decrypt.class   // Subcommand for decryption
+        })
 public class Root {
 
     @CommandLine.Parameters(index = "0", description = "The name of the file.")

@@ -13,8 +13,11 @@ import java.util.concurrent.Callable;
 @CommandLine.Command(
         name = "decrypt",
         aliases = {"dec", "d"},
-        description = "Decrypt a file.",
-        mixinStandardHelpOptions = true)
+        description = "Decrypt a file using the specified algorithm and passphrase.",
+        mixinStandardHelpOptions = true,
+        descriptionHeading = "%nUsage:%n  ",
+        optionListHeading = "%nOptions:%n",
+        footer = "%nPassphrase is required for decryption.")
 public class Decrypt implements Callable<Integer> {
     @CommandLine.ParentCommand
     protected Root root;
