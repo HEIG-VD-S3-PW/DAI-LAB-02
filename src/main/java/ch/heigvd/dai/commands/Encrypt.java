@@ -16,8 +16,11 @@ import java.awt.datatransfer.Clipboard;
 @CommandLine.Command(
         name = "encrypt",
         aliases = {"enc", "e"},
-        description = "Encrypt a file.",
-        mixinStandardHelpOptions = true)
+        description = "Encrypt a file with the specified algorithm and passphrase.",
+        mixinStandardHelpOptions = true,
+        descriptionHeading = "%nUsage:%n  ", // Custom heading
+        optionListHeading = "%nOptions:%n",  // Custom heading for options
+        footer = "%nPassphrase will be randomly generated if not provided.")
 
 public class Encrypt implements Callable<Integer> {
     @CommandLine.ParentCommand protected Root root;
