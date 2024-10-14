@@ -15,7 +15,6 @@ import java.util.concurrent.Callable;
 @CommandLine.Command(
         name = "encrypt",
         aliases = {"enc", "e"},
-        feature/add-feature-help
         description = "Encrypt a file with the specified algorithm and passphrase.",
         mixinStandardHelpOptions = true,
         descriptionHeading = "%nUsage:%n  ", // Custom heading
