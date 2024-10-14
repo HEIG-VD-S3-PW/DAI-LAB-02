@@ -202,7 +202,7 @@ mvn test
 
 ## Credits
 
-This project was developed by Tristan Baud and Mathieu Emery as part of a DAI (Development of internet applications) lab project.
+This project was developed by Tristan Baud ([NATSIIRT](https://github.com/NATSIIRT)) and Mathieu Emery ([mathieuemery](https://github.com/mathieuemery))as part of a DAI (Development of internet applications) lab project.
 
 
 ---
