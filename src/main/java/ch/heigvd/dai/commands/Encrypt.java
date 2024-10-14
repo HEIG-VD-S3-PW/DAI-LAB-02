@@ -45,7 +45,7 @@ public class Encrypt implements Callable<Integer> {
         }
 
         fileManager.write(algorithm.encrypt(fileManager.getData(), root.passphrase));
-
+        System.out.println("File encrypted successfully using " + algorithm.name +".");
         return 0;
     }
 }

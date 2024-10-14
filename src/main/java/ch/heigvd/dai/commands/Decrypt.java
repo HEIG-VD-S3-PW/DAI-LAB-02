@@ -49,6 +49,7 @@ public class Decrypt implements Callable<Integer> {
 
         fileManager.write(algorithm.decrypt(fileManager.getData(), root.passphrase));
 
+        System.out.println("File decrypted successfully using " + algorithm.name +".");
 
         return 0;
     }
