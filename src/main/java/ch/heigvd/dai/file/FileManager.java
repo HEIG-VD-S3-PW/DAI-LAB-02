@@ -1,5 +1,10 @@
 package ch.heigvd.dai.file;
 
+/** Manage files
+ * @author Tristan Baud
+ * @author Mathieu Emery
+*/
+
 import java.io.*;
 
 public class FileManager {
@@ -9,6 +14,11 @@ public class FileManager {
 
     private byte[] data;
 
+    /**
+     * Stores the inputFileName and outputFileName in the private attributes of the class
+     * @param _inputFileName The input file's name
+     * @param _outputFileName The output file's name
+     */
     public FileManager(String _inputFileName, String _outputFileName) {
         this.inputFileName = _inputFileName;
         this.outputFileName = _outputFileName;
@@ -17,6 +27,9 @@ public class FileManager {
 
     }
 
+    /**
+     * Reads the input file's content
+     */
     public void read() {
 
         try (FileInputStream inputStream = new FileInputStream(this.inputFileName);
@@ -29,6 +42,10 @@ public class FileManager {
         }
     }
 
+    /**
+     * Write content in the output file
+     * @param data content to write in the file
+     */
     public void write(byte[] data) {
 
         try (FileOutputStream outputStream = new FileOutputStream(this.outputFileName);
@@ -41,6 +58,10 @@ public class FileManager {
         }
     }
 
+    /**
+     * Returns the data stored in the private attribute "data"
+     * @return Data stored in the class
+     */
     public byte[] getData(){
         return this.data;
     }

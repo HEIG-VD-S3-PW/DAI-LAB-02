@@ -2,7 +2,13 @@ package ch.heigvd.dai.algorithm;
 
 import java.util.Random;
 
+/**
+ * Generates a random passphrase to encrypt the content of a file
+ */
 public class RandomPassphraseGenerator {
+    /**
+     * Creates a random passphrase of size N with all ASCII printable character
+     */
     public static String  generator(){
         Random r = new Random();
         final int firstChar = 21; // '!'
