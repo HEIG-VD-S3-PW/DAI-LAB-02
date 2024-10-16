@@ -13,15 +13,7 @@ public class FileManager {
     private final String outputFileName;
     private byte[] data;
 
-    /**
-     * Stores the inputFileName and outputFileName in the private attributes of the class
-     * @param _inputFileName The input file's name
-     * @param _outputFileName The output file's name
-     */
-    public FileManager(String _inputFileName, String _outputFileName) {
-        this.inputFileName = _inputFileName;
-        this.outputFileName = _outputFileName;
-      
+
     /**
      * Creates a new FileManager instance
      * @param inputFileName the input file path

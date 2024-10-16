@@ -12,6 +12,11 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.Callable;
 
+/**
+ * Encrypts the content of a file
+ * @author Tristan Baud
+ * @author Mathieu Emery
+ */
 @CommandLine.Command(
         name = "encrypt",
         aliases = {"enc", "e"},
@@ -20,13 +25,6 @@ import java.util.concurrent.Callable;
         descriptionHeading = "%nUsage:%n  ", // Custom heading
         optionListHeading = "%nOptions:%n",  // Custom heading for options
         footer = "%nPassphrase will be randomly generated if not provided.")
-
-/** 
- * Encrypts the content of a file
- * @author Tristan Baud
- * @author Mathieu Emery
-*/
-
 public class Encrypt implements Callable<Integer> {
   
     @CommandLine.ParentCommand

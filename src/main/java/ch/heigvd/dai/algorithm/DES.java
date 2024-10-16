@@ -1,5 +1,6 @@
 package ch.heigvd.dai.algorithm;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -17,9 +18,7 @@ public class DES extends Algorithm {
      * Constructor that sets the private attributes of the class
      */
     public DES() {
-        this.name = "DES";
-        this.description = "DES is a symmetric encryption algorithm.";
-        this.strength = STRENGTH.MEDIUM;
+        super("DES", "DES is a symmetric encryption algorithm.");
     }
 
     /**
@@ -69,9 +68,13 @@ public class DES extends Algorithm {
             Cipher cipher = Cipher.getInstance("DES");
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             return cipher.doFinal(bytesToDecrypt); // Return decrypted byte array
-        }
-        catch(Exception e) {
-            e.printStackTrace();
+
+        }catch (BadPaddingException e){
+            System.err.println("Invalid key or corrupted data.");
+            return null;
+
+        } catch (Exception e) {
+            System.err.println("An unexpected error occurred during decryption: " + e.getMessage());
             return null;
         }
     }

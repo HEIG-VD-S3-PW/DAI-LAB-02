@@ -10,6 +10,11 @@ import java.io.InputStreamReader;
 import java.util.Objects;
 import java.util.concurrent.Callable;
 
+/**
+ * Decrypt the content of a file
+ * @author Tristan Baud
+ * @author Mathieu Emery
+ */
 @CommandLine.Command(
         name = "decrypt",
         aliases = {"dec", "d"},
@@ -18,12 +23,6 @@ import java.util.concurrent.Callable;
         descriptionHeading = "%nUsage:%n  ",
         optionListHeading = "%nOptions:%n",
         footer = "%nPassphrase is required for decryption.")
-
-/** 
- * Decrypt the content of a file
- * @author Tristan Baud
- * @author Mathieu Emery
-*/
 public class Decrypt implements Callable<Integer> {
   
     @CommandLine.ParentCommand 
