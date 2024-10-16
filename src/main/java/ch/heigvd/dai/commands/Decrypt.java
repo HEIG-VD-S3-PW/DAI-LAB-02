@@ -18,10 +18,20 @@ import java.util.concurrent.Callable;
         descriptionHeading = "%nUsage:%n  ",
         optionListHeading = "%nOptions:%n",
         footer = "%nPassphrase is required for decryption.")
+
+/** 
+ * Decrypt the content of a file
+ * @author Tristan Baud
+ * @author Mathieu Emery
+*/
 public class Decrypt implements Callable<Integer> {
-    @CommandLine.ParentCommand
+  
+    @CommandLine.ParentCommand 
     protected Root root;
 
+    /**
+     * Decrypt the content of a file using the correct algorithm
+     */
     @Override
     public Integer call() {
         String inputFileName = root.getFilename();

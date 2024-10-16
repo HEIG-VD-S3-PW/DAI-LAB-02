@@ -20,10 +20,21 @@ import java.util.concurrent.Callable;
         descriptionHeading = "%nUsage:%n  ", // Custom heading
         optionListHeading = "%nOptions:%n",  // Custom heading for options
         footer = "%nPassphrase will be randomly generated if not provided.")
+
+/** 
+ * Encrypts the content of a file
+ * @author Tristan Baud
+ * @author Mathieu Emery
+*/
+
 public class Encrypt implements Callable<Integer> {
+  
     @CommandLine.ParentCommand
     protected Root root;
 
+    /**
+     * Encrypt the content of a file using the correct algorithm and generates a passphrase if necessary
+     */
     @Override
     public Integer call() {
         String inputFileName = root.getFilename();

@@ -21,6 +21,11 @@ import picocli.CommandLine;
                 Encrypt.class,  // Subcommand for encryption
                 Decrypt.class   // Subcommand for decryption
         })
+
+/** Manage the commands and parameters of the application
+ * @author Tristan Baud
+ * @author Mathieu Emery
+*/
 public class Root {
 
     @CommandLine.Parameters(index = "0", description = "The name of the file.")

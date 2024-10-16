@@ -7,19 +7,29 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.Arrays;
 
-/*
- * AES is a symmetric encryption algorithm.
- * Sources used: https://medium.com/@deepak.sirohi9188/java-aes-encryption-and-decryption-1b30c9a5d900
+ /** Encrypt / Decrypt the content of a file with AES
+  * @author Tristan Baud
+  * @author Mathieu Emery
+  * @see https://medium.com/@deepak.sirohi9188/java-aes-encryption-and-decryption-1b30c9a5d900
  */
 
 public class AES extends Algorithm {
 
+    /**
+     * Constructor that sets the private attributes of the class
+     */
     public AES() {
         this.name = "AES";
         this.description = "AES is a symmetric encryption algorithm.";
         this.strength = STRENGTH.HIGH;
     }
 
+    /**
+     * Generates a SecretKeySpec for AES encryption using a given key string.
+     * @param key The input string used to generate the AES key.
+     * @return A SecretKeySpec object that contains the AES key derived from the input string.
+     * @throws Exception If the SHA-256 algorithm is not available or there is an issue generating the key.
+     */
     private SecretKeySpec generateKey(String key) throws Exception {
         MessageDigest sha = MessageDigest.getInstance("SHA-256");
         byte[] keyBytes = key.getBytes(StandardCharsets.UTF_8);
@@ -28,12 +38,22 @@ public class AES extends Algorithm {
         return new SecretKeySpec(keyBytes, "AES");
     }
 
+    /**
+     * Generates a random initialization vector (IV) for AES encryption.
+     * @return An IvParameterSpec object containing the generated IV.
+     */
     private IvParameterSpec generateIv() {
         byte[] iv = new byte[16];
         new java.security.SecureRandom().nextBytes(iv);
         return new IvParameterSpec(iv);
     }
 
+    /**
+     * Method to encrypt data using AES
+     * @param bytesToEncrypt data to encrypt
+     * @param key chosen key to encrypt the data
+     * @return encrypted data
+    */
     @Override
     public byte[] encrypt(byte[] bytesToEncrypt, String key) {
         try {
@@ -56,6 +76,12 @@ public class AES extends Algorithm {
         }
     }
 
+    /**
+     * Method to decrypt data using AES
+     * @param bytesToDecrypt data to decrypt
+     * @param key key that was used to encrypt
+     * @return decrypted data
+    */
     @Override
     public byte[] decrypt(byte[] bytesToDecrypt, String key) {
         try {

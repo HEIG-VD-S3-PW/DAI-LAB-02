@@ -5,7 +5,9 @@ enum STRENGTH {
     MEDIUM,
     HIGH
 }
-
+/**
+ * Stores the algorithm's data
+ */
 public abstract class Algorithm {
 
     public String name;
