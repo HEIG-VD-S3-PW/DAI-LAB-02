@@ -17,10 +17,10 @@ public class IAlgorithmConverter implements ITypeConverter<Algorithm> {
      * @return Chosen algorithm
      */
     public Algorithm convert(String value) throws Exception {
-        if (value.equals("AES") || value.isEmpty()) {
+        if (value.equals("AES") || value.isEmpty() || value.equals("aes")) {
             return new AES();
         }
-        if (value.equals("DES")){
+        if (value.equals("DES") || value.equals("des")){
             return new DES();
         }
         throw new Exception("Unknown algorithm");
