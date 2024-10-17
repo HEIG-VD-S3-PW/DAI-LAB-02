@@ -66,6 +66,8 @@ public class Encrypt implements Callable<Integer> {
 
             fileManager.write(encryptedData);
 
+            fileManager.deleteInputFile();
+
             System.out.println("Encryption successful. Encrypted file: " + outputFileName);
             return 0;
         } catch (IOException e) {

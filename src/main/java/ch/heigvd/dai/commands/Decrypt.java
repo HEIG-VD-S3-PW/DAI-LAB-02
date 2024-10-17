@@ -70,6 +70,8 @@ public class Decrypt implements Callable<Integer> {
 
             fileManager.write(decryptedData);
 
+            fileManager.deleteInputFile();
+
             System.out.println("Decryption successful. Decrypted file: " + outputFileName);
             return 0;
         } catch (IOException e) {
