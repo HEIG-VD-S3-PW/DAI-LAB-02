@@ -60,9 +60,9 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "improvement/improve-feature-comments",
+    "git-widget-placeholder": "configuration/update-configuration-run-package",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/mathieu/Documents/PIN-Project-2024",
+    "last_opened_file_path": "/home/mathieu/Desktop/DAI-LAB-02",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -71,7 +71,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Run the application">
     <configuration name="Run the application" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="ch.heigvd.dai.Main" />
       <module name="pw-2" />
@@ -168,6 +168,7 @@
       <workItem from="1728912363338" duration="27000" />
       <workItem from="1728997252710" duration="1692000" />
       <workItem from="1729013364275" duration="1107000" />
+      <workItem from="1729151402347" duration="5000" />
     </task>
     <servers />
   </component>
