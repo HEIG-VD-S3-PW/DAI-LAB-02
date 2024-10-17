@@ -89,4 +89,17 @@ public class FileManager {
     public byte[] getData() {
         return data.clone();
     }
+
+
+    /**
+     * Deletes the input file
+     */
+    public void deleteInputFile() {
+        try {
+            Files.deleteIfExists(Paths.get(inputFileName));
+        } catch (IOException e) {
+            System.err.println("Error deleting input file: " + e.getMessage());
+        }
+    }
+
 }
