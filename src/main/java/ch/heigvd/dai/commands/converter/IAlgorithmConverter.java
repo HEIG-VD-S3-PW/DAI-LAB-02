@@ -16,16 +16,11 @@ public class IAlgorithmConverter implements ITypeConverter<Algorithm> {
      * @param value string that stores the algorithm entered by the user
      * @return Chosen algorithm
      */
-    public Algorithm convert(String value) throws Exception {
+    public Algorithm convert(String value) {
         if (value == null || value.isEmpty()) {
             value = "AES";
         }
-        try {
-            String className = "ch.heigvd.dai.algorithm." + value.toUpperCase();
-            return (Algorithm) Class.forName(className).getDeclaredConstructor().newInstance();
-        } catch (ClassNotFoundException e) {
-            throw new IllegalArgumentException("Invalid algorithm: " + value);
-        }
+        return Algorithm.valueOf(value);
     }
 
 }

@@ -7,40 +7,49 @@ import picocli.CommandLine;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Objects;
 import java.util.concurrent.Callable;
 
 /**
- * Decrypt the content of a file
- * @author Tristan Baud
- * @author Mathieu Emery
+ * Decrypt the content of a file using the file extension as the algorithm.
  */
 @CommandLine.Command(
         name = "decrypt",
         aliases = {"dec", "d"},
-        description = "Decrypt a file using the specified algorithm and passphrase.",
+        description = "Decrypt a file using the algorithm indicated by its file extension.",
         mixinStandardHelpOptions = true,
         descriptionHeading = "%nUsage:%n  ",
         optionListHeading = "%nOptions:%n",
         footer = "%nPassphrase is required for decryption.")
 public class Decrypt implements Callable<Integer> {
-  
-    @CommandLine.ParentCommand 
+
+    @CommandLine.ParentCommand
     protected Root root;
 
     /**
-     * Decrypt the content of a file using the correct algorithm
+     * Decrypt the content of a file using the algorithm inferred from the file extension.
      */
     @Override
     public Integer call() {
         String inputFileName = root.getFilename();
 
-        if (!inputFileName.endsWith(".encrypted")) {
-            System.err.println("Input file must end with '.encrypted'.");
+        // Extract the file extension to determine the algorithm
+        int dotIndex = inputFileName.lastIndexOf('.');
+        if (dotIndex == -1 || dotIndex == inputFileName.length() - 1) {
+            System.err.println("Unable to determine algorithm from file extension. No extension found.");
             return 1;
         }
 
-        String outputFileName = inputFileName.replace(".encrypted", "");
+        String extension = inputFileName.substring(dotIndex + 1);
+        String outputFileName = inputFileName.substring(0, dotIndex);
+
+        // Map the extension to the corresponding algorithm
+        Algorithm algorithm;
+        try {
+            algorithm = Algorithm.valueOf(extension.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            System.err.println("Unknown algorithm extension: " + extension);
+            return 1;
+        }
 
         FileManager fileManager = new FileManager(inputFileName, outputFileName);
 
@@ -50,8 +59,6 @@ public class Decrypt implements Callable<Integer> {
             System.err.println("Error reading encrypted file: " + e.getMessage());
             return 1;
         }
-
-        Algorithm algorithm = root.getAlgorithm();
 
         // Prompt the user for the passphrase if not provided
         while (root.passphrase == null || root.passphrase.isEmpty()) {
