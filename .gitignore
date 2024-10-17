@@ -1,3 +1,8 @@
+# Custom
+
+*.txt
+*.encrypted
+
 ## IntelliJ IDEA
 
 # General

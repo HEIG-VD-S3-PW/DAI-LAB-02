@@ -17,12 +17,15 @@ public class IAlgorithmConverter implements ITypeConverter<Algorithm> {
      * @return Chosen algorithm
      */
     public Algorithm convert(String value) throws Exception {
-        if (value.equals("AES") || value.isEmpty()) {
-            return new AES();
+        if (value == null || value.isEmpty()) {
+            value = "AES";
         }
-        if (value.equals("DES")){
-            return new DES();
+        try {
+            String className = "ch.heigvd.dai.algorithm." + value.toUpperCase();
+            return (Algorithm) Class.forName(className).getDeclaredConstructor().newInstance();
+        } catch (ClassNotFoundException e) {
+            throw new IllegalArgumentException("Invalid algorithm: " + value);
         }
-        throw new Exception("Unknown algorithm");
     }
+
 }
