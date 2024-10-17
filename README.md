@@ -136,7 +136,7 @@ java -jar target/pw-2-1.0-SNAPSHOT.jar -a=DES test.txt encrypt
 Output:
 
 ```arduino
-Randomly generated passphrase (Already copied to clipboard): *********
+The randomly generated passphrase has been copied to your clipboard.
 File encrypted successfully using DES.
 ```
 

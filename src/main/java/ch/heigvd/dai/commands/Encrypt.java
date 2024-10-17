@@ -48,7 +48,7 @@ public class Encrypt implements Callable<Integer> {
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             clipboard.setContents(stringSelection, null);
 
-            System.out.println("Randomly generated passphrase (Already copied to clipboard): " + root.passphrase);
+            System.out.println("The randomly generated passphrase has been copied to your clipboard.");
         }
 
         fileManager.write(algorithm.encrypt(fileManager.getData(), root.passphrase));
