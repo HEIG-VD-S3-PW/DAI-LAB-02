@@ -142,16 +142,16 @@ File encrypted successfully using DES.
 
 ### Decrypting a File
 
-To decrypt an encrypted file, specify the algorithm and passphrase used during encryption:
+To decrypt an encrypted file, specify just the file name and the passphrase used for encryption (if not specified, the application will ask for it):
 
 ```bash
-java -jar target/pw-2-1.0-SNAPSHOT.jar -a=AES -p=mysecretpassphrase test.txt.encrypted decrypt
+java -jar target/pw-2-1.0-SNAPSHOT.jar -p=mysecretpassphrase test.txt.des decrypt
 ```
 
 Output:
 
 ```arduino
-File decrypted successfully using AES.
+File decrypted successfully using DES.
 ```
 
 ---

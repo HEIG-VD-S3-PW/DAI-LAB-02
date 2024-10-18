@@ -36,7 +36,7 @@ public class Encrypt implements Callable<Integer> {
     @Override
     public Integer call() {
         String inputFileName = root.getFilename();
-        String outputFileName = inputFileName + ".encrypted";
+        String outputFileName = inputFileName + "." + root.getAlgorithm().getName().toLowerCase();
 
         FileManager fileManager = new FileManager(inputFileName, outputFileName);
 

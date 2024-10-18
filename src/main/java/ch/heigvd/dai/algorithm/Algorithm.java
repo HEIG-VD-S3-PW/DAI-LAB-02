@@ -1,6 +1,8 @@
 package ch.heigvd.dai.algorithm;
 
 
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * Abstract class to store the algorithm's data and define encryption/decryption methods.
  */
@@ -29,4 +31,15 @@ public abstract class Algorithm {
     public abstract byte[] encrypt(byte[] bytesToEncrypt, String key);
 
     public abstract byte[] decrypt(byte[] bytesToDecrypt, String key);
+
+    // Static method to get the algorithm from the user input or file extension
+    public static Algorithm valueOf(String value) {
+        try {
+            String className = "ch.heigvd.dai.algorithm." + value.toUpperCase();
+            return (Algorithm) Class.forName(className).getDeclaredConstructor().newInstance();
+        } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException |
+                 InvocationTargetException e) {
+            throw new IllegalArgumentException("Invalid algorithm: " + value);
+        }
+    }
 }

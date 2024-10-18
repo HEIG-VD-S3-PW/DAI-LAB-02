@@ -12,7 +12,14 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e36f94e3-d4ed-4140-b787-70e47d5aefd0" name="Changes" comment="" />
+    <list default="true" id="e36f94e3-d4ed-4140-b787-70e47d5aefd0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/heigvd/dai/algorithm/Algorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/heigvd/dai/algorithm/Algorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/heigvd/dai/commands/Decrypt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/heigvd/dai/commands/Decrypt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/heigvd/dai/commands/Encrypt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/heigvd/dai/commands/Encrypt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/heigvd/dai/commands/converter/IAlgorithmConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/heigvd/dai/commands/converter/IAlgorithmConverter.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -60,7 +67,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "configuration/update-configuration-run-package",
+    "git-widget-placeholder": "feature/add-encryption-algo-name-as-filename",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/mathieu/Desktop/DAI-LAB-02",
     "node.js.detected.package.eslint": "true",
@@ -71,7 +78,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.Run the application">
+  <component name="RunManager" selected="Maven.Package application as JAR file">
     <configuration name="Run the application" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="ch.heigvd.dai.Main" />
       <module name="pw-2" />
