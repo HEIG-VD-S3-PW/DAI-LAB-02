@@ -1,18 +1,22 @@
 package ch.heigvd.dai.commands;
 
-import ch.heigvd.dai.algorithm.AES;
 import ch.heigvd.dai.algorithm.Algorithm;
-import ch.heigvd.dai.file.FileManager;
 import ch.heigvd.dai.algorithm.RandomPassphraseGenerator;
+import ch.heigvd.dai.file.FileManager;
 import picocli.CommandLine;
 
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.Toolkit;
+import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.Callable;
 
-import java.awt.datatransfer.StringSelection;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-
+/**
+ * Encrypts the content of a file
+ * @author Tristan Baud
+ * @author Mathieu Emery
+ */
 @CommandLine.Command(
         name = "encrypt",
         aliases = {"enc", "e"},
@@ -21,38 +25,58 @@ import java.awt.datatransfer.Clipboard;
         descriptionHeading = "%nUsage:%n  ", // Custom heading
         optionListHeading = "%nOptions:%n",  // Custom heading for options
         footer = "%nPassphrase will be randomly generated if not provided.")
-
-/** Encrypts the content of a file
- * @author Tristan Baud
- * @author Mathieu Emery
-*/
 public class Encrypt implements Callable<Integer> {
-    @CommandLine.ParentCommand protected Root root;
+  
+    @CommandLine.ParentCommand
+    protected Root root;
 
     /**
      * Encrypt the content of a file using the correct algorithm and generates a passphrase if necessary
      */
     @Override
     public Integer call() {
+        String inputFileName = root.getFilename();
+        String outputFileName = inputFileName + "." + root.getAlgorithm().getName().toLowerCase();
 
-        FileManager fileManager = new FileManager(root.getFilename(), root.getFilename() + ".encrypted");
-        fileManager.read();
+        FileManager fileManager = new FileManager(inputFileName, outputFileName);
+
+        try {
+            fileManager.read();
+        } catch (IOException e) {
+            System.err.println("Error reading input file: " + e.getMessage());
+            return 1;
+        }
 
         Algorithm algorithm = root.getAlgorithm();
 
-        if(Objects.isNull(root.passphrase)){
+        // Generate a random passphrase if not provided
+        if (Objects.isNull(root.passphrase)) {
             root.passphrase = RandomPassphraseGenerator.generator();
 
-            String myString = root.passphrase;
-            StringSelection stringSelection = new StringSelection(myString);
+            // Copy the passphrase to the clipboard
+            StringSelection stringSelection = new StringSelection(root.passphrase);
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             clipboard.setContents(stringSelection, null);
 
             System.out.println("The randomly generated passphrase has been copied to your clipboard.");
+
         }
 
-        fileManager.write(algorithm.encrypt(fileManager.getData(), root.passphrase));
-        System.out.println("File encrypted successfully using " + algorithm.name +".");
-        return 0;
+        try {
+            byte[] encryptedData = algorithm.encrypt(fileManager.getData(), root.passphrase);
+
+            fileManager.write(encryptedData);
+
+            fileManager.deleteInputFile();
+
+            System.out.println("Encryption successful. Encrypted file: " + outputFileName);
+            return 0;
+        } catch (IOException e) {
+            System.err.println("Error writing encrypted file: " + e.getMessage());
+            return 1;
+        } catch (Exception e) {
+            System.err.println("An unexpected error occurred during encryption: " + e.getMessage());
+            return 1;
+        }
     }
 }

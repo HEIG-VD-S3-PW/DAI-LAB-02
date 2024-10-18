@@ -1,5 +1,6 @@
 package ch.heigvd.dai.algorithm;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -19,9 +20,7 @@ public class AES extends Algorithm {
      * Constructor that sets the private attributes of the class
      */
     public AES() {
-        this.name = "AES";
-        this.description = "AES is a symmetric encryption algorithm.";
-        this.strength = STRENGTH.HIGH;
+        super("AES", "AES is a symmetric encryption algorithm.");
     }
 
     /**
@@ -95,8 +94,13 @@ public class AES extends Algorithm {
             cipher.init(Cipher.DECRYPT_MODE, secretKey, ivSpec);
 
             return cipher.doFinal(encryptedBytes);
+
+        } catch (BadPaddingException e){
+            System.err.println("Invalid key or corrupted data.");
+            return null;
+
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("An unexpected error occurred during decryption: " + e.getMessage());
             return null;
         }
     }

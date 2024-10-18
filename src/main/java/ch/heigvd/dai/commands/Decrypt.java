@@ -1,63 +1,92 @@
 package ch.heigvd.dai.commands;
 
-import picocli.CommandLine;
-
-import ch.heigvd.dai.algorithm.AES;
 import ch.heigvd.dai.algorithm.Algorithm;
 import ch.heigvd.dai.file.FileManager;
 import picocli.CommandLine;
 
-import java.io.File;
-import java.util.Objects;
-import java.util.concurrent.Callable;
-
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.BufferedReader;
+import java.util.concurrent.Callable;
 
+/**
+ * Decrypt the content of a file using the file extension as the algorithm.
+ */
 @CommandLine.Command(
         name = "decrypt",
         aliases = {"dec", "d"},
-        description = "Decrypt a file using the specified algorithm and passphrase.",
+        description = "Decrypt a file using the algorithm indicated by its file extension.",
         mixinStandardHelpOptions = true,
         descriptionHeading = "%nUsage:%n  ",
         optionListHeading = "%nOptions:%n",
         footer = "%nPassphrase is required for decryption.")
-
-/** Decrypt the content of a file
- * @author Tristan Baud
- * @author Mathieu Emery
-*/
 public class Decrypt implements Callable<Integer> {
-    @CommandLine.ParentCommand protected Root root;
+
+    @CommandLine.ParentCommand
+    protected Root root;
 
     /**
-     * Decrypt the content of a file using the correct algorithm
+     * Decrypt the content of a file using the algorithm inferred from the file extension.
      */
     @Override
     public Integer call() {
+        String inputFileName = root.getFilename();
 
-        FileManager fileManager = new FileManager(root.getFilename(), root.getFilename().replaceAll(".encrypted", ""));
+        // Extract the file extension to determine the algorithm
+        int dotIndex = inputFileName.lastIndexOf('.');
+        if (dotIndex == -1 || dotIndex == inputFileName.length() - 1) {
+            System.err.println("Unable to determine algorithm from file extension. No extension found.");
+            return 1;
+        }
 
-        fileManager.read();
+        String extension = inputFileName.substring(dotIndex + 1);
+        String outputFileName = inputFileName.substring(0, dotIndex);
 
-        Algorithm algorithm = root.getAlgorithm();
+        // Map the extension to the corresponding algorithm
+        Algorithm algorithm;
+        try {
+            algorithm = Algorithm.valueOf(extension.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            System.err.println("Unknown algorithm extension: " + extension);
+            return 1;
+        }
 
-        while(Objects.isNull(root.passphrase)){
-            System.out.print("Enter the passphrase to decrypt the file: ");
+        FileManager fileManager = new FileManager(inputFileName, outputFileName);
 
+        try {
+            fileManager.read();
+        } catch (IOException e) {
+            System.err.println("Error reading encrypted file: " + e.getMessage());
+            return 1;
+        }
+
+        // Prompt the user for the passphrase if not provided
+        while (root.passphrase == null || root.passphrase.isEmpty()) {
+            BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
             try {
-                BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+                System.out.print("Enter the passphrase to decrypt the file: ");
                 root.passphrase = bufferRead.readLine();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.err.println("Error reading passphrase: " + e.getMessage());
+                return 1;
             }
         }
 
-        fileManager.write(algorithm.decrypt(fileManager.getData(), root.passphrase));
+        try {
+            byte[] decryptedData = algorithm.decrypt(fileManager.getData(), root.passphrase);
 
-        System.out.println("File decrypted successfully using " + algorithm.name +".");
+            fileManager.write(decryptedData);
 
-        return 0;
+            fileManager.deleteInputFile();
+
+            System.out.println("Decryption successful. Decrypted file: " + outputFileName);
+            return 0;
+        } catch (IOException e) {
+            System.err.println("Error writing decrypted file: " + e.getMessage());
+            return 1;
+        } catch (Exception e) {
+            System.err.println("An unexpected error occurred during decryption: " + e.getMessage());
+            return 1;
+        }
     }
 }

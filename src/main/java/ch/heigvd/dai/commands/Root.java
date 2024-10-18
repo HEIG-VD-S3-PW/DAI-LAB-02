@@ -4,6 +4,11 @@ import ch.heigvd.dai.algorithm.Algorithm;
 import ch.heigvd.dai.commands.converter.IAlgorithmConverter;
 import picocli.CommandLine;
 
+/**
+ * Manage the commands and parameters of the application
+ * @author Tristan Baud
+ * @author Mathieu Emery
+ */
 @CommandLine.Command(
         mixinStandardHelpOptions = true,
         name = "Ammar",
@@ -21,11 +26,6 @@ import picocli.CommandLine;
                 Encrypt.class,  // Subcommand for encryption
                 Decrypt.class   // Subcommand for decryption
         })
-
-/** Manage the commands and parameters of the application
- * @author Tristan Baud
- * @author Mathieu Emery
-*/
 public class Root {
 
     @CommandLine.Parameters(index = "0", description = "The name of the file.")

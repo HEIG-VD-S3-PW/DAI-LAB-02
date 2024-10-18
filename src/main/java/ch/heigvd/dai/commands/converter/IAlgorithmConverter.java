@@ -16,13 +16,11 @@ public class IAlgorithmConverter implements ITypeConverter<Algorithm> {
      * @param value string that stores the algorithm entered by the user
      * @return Chosen algorithm
      */
-    public Algorithm convert(String value) throws Exception {
-        if (value.equals("AES") || value.isEmpty()) {
-            return new AES();
+    public Algorithm convert(String value) {
+        if (value == null || value.isEmpty()) {
+            value = "AES";
         }
-        if (value.equals("DES")){
-            return new DES();
-        }
-        throw new Exception("Unknown algorithm");
+        return Algorithm.valueOf(value);
     }
+
 }
