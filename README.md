@@ -142,16 +142,16 @@ File encrypted successfully using DES.
 
 ### Decrypting a File
 
-To decrypt an encrypted file, specify the algorithm and passphrase used during encryption:
+To decrypt an encrypted file, specify just the file name and the passphrase used for encryption (if the passphrase is not specified, the application will ask for it):
 
 ```bash
-java -jar target/pw-2-1.0-SNAPSHOT.jar -a=AES -p=mysecretpassphrase test.txt.encrypted decrypt
+java -jar target/pw-2-1.0-SNAPSHOT.jar -p=mysecretpassphrase test.txt.des decrypt
 ```
 
 Output:
 
 ```arduino
-File decrypted successfully using AES.
+File decrypted successfully using DES.
 ```
 
 ---
@@ -206,13 +206,3 @@ This project was developed by Tristan Baud ([NATSIIRT](https://github.com/NATSII
 
 
 ---
-
-### Key Points Covered in This README:
-
-1. **Purpose and Features**: Explained clearly what the application does and its main features.
-2. **Usage Instructions**: Provided detailed instructions on how to use the application with examples and outputs to make it easy for new users to understand without running it locally.
-3. **Build and Setup**: Clear instructions for cloning the repo, building the project with Maven, and running the application.
-4. **Command Summary**: Summarized the key commands and options for easy reference.
-
-This README should make it straightforward for new users or developers to understand, use, and contribute to your project.
-
