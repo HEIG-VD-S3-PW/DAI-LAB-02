@@ -33,6 +33,11 @@ public class FileManager {
         this.data = new byte[0];
     }
 
+    public static boolean checkPath(String outputPath) {
+        Path path = Paths.get(outputPath);
+        return Files.exists(path);
+    }
+
     /**
      * Reads the content of the input file into memory
      * @throws IOException if an I/O error occurs

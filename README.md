@@ -133,6 +133,13 @@ If no passphrase is provided, a random one will be generated:
 java -jar target/pw-2-1.0-SNAPSHOT.jar -a=DES test.txt encrypt
 ```
 
+If you want to specify an output folder for the decrypted file, you can use the -o or --output option:
+
+```bash
+java -jar target/pw-2-1.0-SNAPSHOT.jar -a=DES -o=outputs test.txt encrypt
+```
+
+
 Output:
 
 ```arduino
@@ -146,6 +153,12 @@ To decrypt an encrypted file, specify just the file name and the passphrase used
 
 ```bash
 java -jar target/pw-2-1.0-SNAPSHOT.jar -p=mysecretpassphrase test.txt.des decrypt
+```
+
+If you want to specify an output folder for the decrypted file, you can use the -o or --output option:
+
+```bash
+java -jar target/pw-2-1.0-SNAPSHOT.jar -p=mysecretpassphrase -o=outputs test.txt.des decrypt
 ```
 
 Output:
@@ -163,6 +176,7 @@ File decrypted successfully using DES.
 | decrypt          | 	Decrypt a file using the specified algorithm and passphrase. |
 | -a, --algorithm  | 	The encryption algorithm to use (AES or DES).                |
 | -p, --passphrase | 	Passphrase for encryption/decryption.                        |
+| -o, --output     | 	Output folder                                                |
 | -h, --help       | 	Show help message and exit.                                  |
 | -V, --version    | 	Print version information and exit.                          |
 

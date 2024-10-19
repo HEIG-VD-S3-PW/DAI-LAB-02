@@ -42,6 +42,16 @@ public class Decrypt implements Callable<Integer> {
         String extension = inputFileName.substring(dotIndex + 1);
         String outputFileName = inputFileName.substring(0, dotIndex);
 
+        if(root.outputPath != null) {
+            // Check if the path exist
+            if (!FileManager.checkPath(root.outputPath)) {
+                System.err.println("The output path does not exist.");
+                return 1;
+            }else {
+                outputFileName = root.outputPath + "/" + outputFileName;
+            }
+        }
+
         // Map the extension to the corresponding algorithm
         Algorithm algorithm;
         try {

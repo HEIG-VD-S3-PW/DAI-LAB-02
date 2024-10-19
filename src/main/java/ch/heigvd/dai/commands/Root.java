@@ -44,6 +44,12 @@ public class Root {
             required = false)
     protected String passphrase;
 
+    @CommandLine.Option(
+            names = {"-o", "--output"},
+            description = "The path of the output file.",
+            required = false)
+    protected String outputPath;
+
 
     public String getFilename() {
         return filename;

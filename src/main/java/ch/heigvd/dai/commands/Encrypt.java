@@ -36,7 +36,18 @@ public class Encrypt implements Callable<Integer> {
     @Override
     public Integer call() {
         String inputFileName = root.getFilename();
+
         String outputFileName = inputFileName + "." + root.getAlgorithm().getName().toLowerCase();
+
+        if(root.outputPath != null) {
+            // Check if the path exist
+            if (!FileManager.checkPath(root.outputPath)) {
+                System.err.println("The output path does not exist.");
+                return 1;
+            }else {
+                outputFileName = root.outputPath + "/" + outputFileName;
+            }
+        }
 
         FileManager fileManager = new FileManager(inputFileName, outputFileName);
 
