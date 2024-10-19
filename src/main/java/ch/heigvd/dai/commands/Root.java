@@ -29,35 +29,35 @@ import picocli.CommandLine;
 public class Root {
 
     @CommandLine.Parameters(index = "0", description = "The name of the file.")
-    protected String filename;
+    private String filename;
 
     @CommandLine.Option(
             names = {"-a", "--algorithm"},
             description = "The algorithm to use (possible values: ${COMPLETION-CANDIDATES}, default value: AES).",
             required = false,
             converter = IAlgorithmConverter.class)
-    protected Algorithm algorithm;
+    private Algorithm algorithm;
 
     @CommandLine.Option(
             names = {"-p", "--passphrase"},
             description = "The passphrase to use (Will be randomly generated if left empty).",
             required = false)
-    protected String passphrase;
+    private String passphrase;
 
     @CommandLine.Option(
             names = {"-o", "--output"},
             description = "The path of the output file.",
             required = false)
-    protected String outputPath;
+    private String outputPath;
 
 
-    public String getFilename() {
-        return filename;
-    }
+    public String getFilename() { return filename; }
 
-    public Algorithm getAlgorithm() {
-        return algorithm;
-    }
+    public Algorithm getAlgorithm() { return algorithm; }
+
+    public String getPassphrase() { return passphrase; }
+
+    public String getOutputPath() { return outputPath; }
 
 
 }

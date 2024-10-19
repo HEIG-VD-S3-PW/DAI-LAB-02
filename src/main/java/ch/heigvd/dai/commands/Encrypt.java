@@ -39,13 +39,12 @@ public class Encrypt implements Callable<Integer> {
 
         String outputFileName = inputFileName + "." + root.getAlgorithm().getName().toLowerCase();
 
-        if(root.outputPath != null) {
-            // Check if the path exist
-            if (!FileManager.checkPath(root.outputPath)) {
+        if(root.getOutputPath() != null) {
+            if (!FileManager.isPathValid(root.getOutputPath())) {
                 System.err.println("The output path does not exist.");
                 return 1;
             }else {
-                outputFileName = root.outputPath + "/" + outputFileName;
+                outputFileName = root.getOutputPath() + "/" + outputFileName;
             }
         }
 
@@ -59,13 +58,13 @@ public class Encrypt implements Callable<Integer> {
         }
 
         Algorithm algorithm = root.getAlgorithm();
-
+        String passphrase = root.getPassphrase();
         // Generate a random passphrase if not provided
-        if (Objects.isNull(root.passphrase)) {
-            root.passphrase = RandomPassphraseGenerator.generator();
+        if (Objects.isNull(root.getPassphrase())) {
+            passphrase = RandomPassphraseGenerator.generator();
 
             // Copy the passphrase to the clipboard
-            StringSelection stringSelection = new StringSelection(root.passphrase);
+            StringSelection stringSelection = new StringSelection(passphrase);
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             clipboard.setContents(stringSelection, null);
 
@@ -74,7 +73,7 @@ public class Encrypt implements Callable<Integer> {
         }
 
         try {
-            byte[] encryptedData = algorithm.encrypt(fileManager.getData(), root.passphrase);
+            byte[] encryptedData = algorithm.encrypt(fileManager.getData(), passphrase);
 
             fileManager.write(encryptedData);
 

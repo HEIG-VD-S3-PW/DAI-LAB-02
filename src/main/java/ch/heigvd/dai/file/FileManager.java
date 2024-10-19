@@ -33,11 +33,6 @@ public class FileManager {
         this.data = new byte[0];
     }
 
-    public static boolean checkPath(String outputPath) {
-        Path path = Paths.get(outputPath);
-        return Files.exists(path);
-    }
-
     /**
      * Reads the content of the input file into memory
      * @throws IOException if an I/O error occurs
@@ -105,6 +100,16 @@ public class FileManager {
         } catch (IOException e) {
             System.err.println("Error deleting input file: " + e.getMessage());
         }
+    }
+
+    /**
+     * Checks if a path exists
+     * @param outputPath the path to check
+     * @return true if the path exists, false otherwise
+     */
+    public static boolean isPathValid(String outputPath) {
+        Path path = Paths.get(outputPath);
+        return Files.exists(path);
     }
 
 }

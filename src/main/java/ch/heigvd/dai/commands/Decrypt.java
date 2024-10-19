@@ -40,15 +40,15 @@ public class Decrypt implements Callable<Integer> {
         }
 
         String extension = inputFileName.substring(dotIndex + 1);
-        String outputFileName = inputFileName.substring(0, dotIndex);
 
-        if(root.outputPath != null) {
-            // Check if the path exist
-            if (!FileManager.checkPath(root.outputPath)) {
+        String outputFileName = inputFileName.substring(0, dotIndex).substring(inputFileName.substring(0, dotIndex).lastIndexOf('/') + 1);
+
+        if(root.getOutputPath() != null) {
+            if (!FileManager.isPathValid(root.getOutputPath())) {
                 System.err.println("The output path does not exist.");
                 return 1;
             }else {
-                outputFileName = root.outputPath + "/" + outputFileName;
+                outputFileName = root.getOutputPath() + "/" + outputFileName;
             }
         }
 
@@ -70,12 +70,14 @@ public class Decrypt implements Callable<Integer> {
             return 1;
         }
 
+        String passphrase = root.getPassphrase();
+
         // Prompt the user for the passphrase if not provided
-        while (root.passphrase == null || root.passphrase.isEmpty()) {
+        while (passphrase== null || passphrase.isEmpty()) {
             BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
             try {
                 System.out.print("Enter the passphrase to decrypt the file: ");
-                root.passphrase = bufferRead.readLine();
+                passphrase = bufferRead.readLine();
             } catch (IOException e) {
                 System.err.println("Error reading passphrase: " + e.getMessage());
                 return 1;
@@ -83,7 +85,7 @@ public class Decrypt implements Callable<Integer> {
         }
 
         try {
-            byte[] decryptedData = algorithm.decrypt(fileManager.getData(), root.passphrase);
+            byte[] decryptedData = algorithm.decrypt(fileManager.getData(), passphrase);
 
             fileManager.write(decryptedData);
 
