@@ -33,7 +33,7 @@ public class Root {
 
     @CommandLine.Option(
             names = {"-a", "--algorithm"},
-            description = "The algorithm to use (possible values: ${COMPLETION-CANDIDATES}, default value: AES).",
+            description = "The algorithm to use (Possible values: DES, AES (Default: AES).",
             required = false,
             converter = IAlgorithmConverter.class)
     private Algorithm algorithm;
@@ -46,7 +46,7 @@ public class Root {
 
     @CommandLine.Option(
             names = {"-o", "--output"},
-            description = "The path of the output file.",
+            description = "The path of the output file. (Default: same directory as the input file).",
             required = false)
     private String outputPath;
 
