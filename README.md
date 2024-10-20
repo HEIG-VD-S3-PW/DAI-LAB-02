@@ -6,12 +6,20 @@ A command-line utility to encrypt and decrypt files securely using AES or DES en
 
 ## Table of Contents
 - [Features](#features)
-- [Requirements](#requirements)
+- [Requirements for using the application](#requirements-for-using-the-application)
 - [Installation](#installation)
+  - [Download the JAR File](#download-the-jar-file)
+  - [Clone the Repository](#clone-the-repository)
 - [Usage](#usage)
-    - [Examples](#examples)
-    - [Command Summary](#command-summary)
-- [Building from Source](#building-from-source)
+  - [Available Commands](#available-commands)
+  - [Options](#options)
+  - [Help Command](#help-command)
+- [Examples](#examples)
+  - [Encrypting a File](#encrypting-a-file)
+  - [Decrypting a File](#decrypting-a-file)
+- [Command Summary](#command-summary)
+- [Contributing](#contributing)
+  - [Add a new encryption/decryption algorithm](#add-a-new-encryptiondecryption-algorithm)
 - [Credits](#credits)
 
 ---
