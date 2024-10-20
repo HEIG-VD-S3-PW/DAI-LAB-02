@@ -1,4 +1,4 @@
-name: Build and Publish JAR to GitHub Release
+name: Build and Release
 
 on:
   push:
@@ -6,43 +6,54 @@ on:
       - main
 
 jobs:
-  build:
+  build-and-release:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
 
     steps:
-      # Étape 1 : Checkout du code
-      - uses: actions/checkout@v4.0.0
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-      # Étape 2 : Configuration de Java 21
-      - uses: actions/setup-java@v4.0.0
+      - name: Set Up JDK 21 (Temurin)
+        uses: actions/setup-java@v3
         with:
-          java-version: "21"
-          distribution: "temurin"
+          distribution: 'temurin'
+          java-version: '21'
 
-      # Étape 3 : Compilation du projet et génération du fichier JAR
-      - name: Build with Maven
-        run: ./mvnw clean package
+      - name: Make Maven Wrapper Executable
+        run: chmod +x mvnw
 
-      # Étape 4 : Création d'une release GitHub et upload du JAR dans la release
+      - name: Build with Maven Wrapper
+        run: ./mvnw clean install
+
+      - name: Extract Version from pom.xml
+        id: extract_version
+        run: |
+          VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GH_DAI_DEPLOY }}
         with:
-          tag_name: 'v1.0.${{ github.run_number }}'  # Tag version dynamique
-          release_name: 'Release v1.0.${{ github.run_number }}'
+          tag_name: v${{ env.VERSION }}
+          release_name: Release v${{ env.VERSION }}
           draft: false
           prerelease: false
 
-      # Étape 6 : Upload du JAR généré dans la release
-      - name: Upload JAR to release
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: DAI-LAB-02
+          path: target/DAI-LAB-02-1.0-SNAPSHOT.jar
+
+      - name: Attach Artifact to Release
         uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_DAI_DEPLOY }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./target/*.jar
-          asset_name: DAI-LAB-02.jar
+          asset_path: target/DAI-LAB-02-1.0-SNAPSHOT.jar
+          asset_name: DAI-LAB-02-1.0-SNAPSHOT.jar
           asset_content_type: application/java-archive
