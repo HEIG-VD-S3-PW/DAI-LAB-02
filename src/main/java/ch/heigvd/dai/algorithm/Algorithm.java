@@ -22,17 +22,20 @@ public abstract class Algorithm {
     public String getName() {
         return name;
     }
-
     public String getDescription() {
         return description;
     }
 
     // Abstract methods for encryption and decryption
     public abstract byte[] encrypt(byte[] bytesToEncrypt, String key);
-
     public abstract byte[] decrypt(byte[] bytesToDecrypt, String key);
 
-    // Static method to get the algorithm from the user input or file extension
+
+    /**
+     * Factory method to create an Algorithm object from a string.
+     * @param value The name of the algorithm to create.
+     * @return The Algorithm object corresponding to the input string.
+     */
     public static Algorithm valueOf(String value) {
         try {
             String className = "ch.heigvd.dai.algorithm." + value.toUpperCase();

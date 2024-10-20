@@ -26,7 +26,7 @@ import java.util.concurrent.Callable;
         optionListHeading = "%nOptions:%n",  // Custom heading for options
         footer = "%nPassphrase will be randomly generated if not provided.")
 public class Encrypt implements Callable<Integer> {
-  
+
     @CommandLine.ParentCommand
     protected Root root;
 
@@ -35,15 +35,15 @@ public class Encrypt implements Callable<Integer> {
      */
     @Override
     public Integer call() {
-        String inputFileName = root.getFilename();
 
+        String inputFileName = root.getFilename();
         String outputFileName = inputFileName + "." + root.getAlgorithm().getName().toLowerCase();
 
-        if(root.getOutputPath() != null) {
+        if (root.getOutputPath() != null) {
             if (!FileManager.isPathValid(root.getOutputPath())) {
                 System.err.println("The output path does not exist.");
                 return 1;
-            }else {
+            } else {
                 outputFileName = root.getOutputPath() + "/" + outputFileName;
             }
         }
@@ -62,17 +62,12 @@ public class Encrypt implements Callable<Integer> {
         // Generate a random passphrase if not provided
         if (Objects.isNull(root.getPassphrase())) {
             passphrase = RandomPassphraseGenerator.generator();
-
-            // Copy the passphrase to the clipboard
-            StringSelection stringSelection = new StringSelection(passphrase);
-            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-            clipboard.setContents(stringSelection, null);
-
+            copyToClipboard(passphrase);
             System.out.println("The randomly generated passphrase has been copied to your clipboard.");
-
         }
 
         try {
+
             byte[] encryptedData = algorithm.encrypt(fileManager.getData(), passphrase);
 
             fileManager.write(encryptedData);
@@ -80,13 +75,30 @@ public class Encrypt implements Callable<Integer> {
             fileManager.deleteInputFile();
 
             System.out.println("Encryption successful. Encrypted file: " + outputFileName);
+
             return 0;
+
         } catch (IOException e) {
+
             System.err.println("Error writing encrypted file: " + e.getMessage());
             return 1;
+
         } catch (Exception e) {
+
             System.err.println("An unexpected error occurred during encryption: " + e.getMessage());
             return 1;
+
         }
     }
+
+    /**
+     * Copies the passphrase to the clipboard
+     * @param passphrase the passphrase to copy
+     */
+    private void copyToClipboard(String passphrase) {
+        StringSelection stringSelection = new StringSelection(passphrase);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(stringSelection, null);
+    }
+
 }

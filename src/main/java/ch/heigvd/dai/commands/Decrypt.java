@@ -41,6 +41,7 @@ public class Decrypt implements Callable<Integer> {
 
         String extension = inputFileName.substring(dotIndex + 1);
 
+        // If the filename is a path, we just want the name of the file
         String outputFileName = inputFileName.substring(0, dotIndex).substring(inputFileName.substring(0, dotIndex).lastIndexOf('/') + 1);
 
         if(root.getOutputPath() != null) {
@@ -62,7 +63,6 @@ public class Decrypt implements Callable<Integer> {
         }
 
         FileManager fileManager = new FileManager(inputFileName, outputFileName);
-
         try {
             fileManager.read();
         } catch (IOException e) {
@@ -71,7 +71,6 @@ public class Decrypt implements Callable<Integer> {
         }
 
         String passphrase = root.getPassphrase();
-
         // Prompt the user for the passphrase if not provided
         while (passphrase== null || passphrase.isEmpty()) {
             BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
@@ -85,6 +84,7 @@ public class Decrypt implements Callable<Integer> {
         }
 
         try {
+
             byte[] decryptedData = algorithm.decrypt(fileManager.getData(), passphrase);
 
             fileManager.write(decryptedData);
@@ -92,13 +92,20 @@ public class Decrypt implements Callable<Integer> {
             fileManager.deleteInputFile();
 
             System.out.println("Decryption successful. Decrypted file: " + outputFileName);
+
             return 0;
+
         } catch (IOException e) {
+
             System.err.println("Error writing decrypted file: " + e.getMessage());
             return 1;
+
         } catch (Exception e) {
+
             System.err.println("An unexpected error occurred during decryption: " + e.getMessage());
             return 1;
+
         }
     }
+
 }

@@ -18,7 +18,7 @@ public class IAlgorithmConverter implements ITypeConverter<Algorithm> {
      */
     public Algorithm convert(String value) {
         if (value == null || value.isEmpty()) {
-            value = "AES";
+            return new AES();
         }
         return Algorithm.valueOf(value);
     }
