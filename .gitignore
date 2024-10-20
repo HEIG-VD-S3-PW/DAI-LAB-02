@@ -6,11 +6,17 @@
 ## IntelliJ IDEA
 
 # General
-.idea/libraries/
-.idea/shelf/
-.idea/compiler.xml
+.idea/*
+!.idea/compiler.xml
+!.idea/encodings.xml
+!.idea/misc.xml
+!.idea/vcs.xml
+!.idea/runConfigurations/
+
+.idea/workspace.xml
+.idea/uiDesigner.xml
 .idea/jarRepositories.xml
-.idea/modules.xml
+
 *.iws
 *.iml
 *.ipr
