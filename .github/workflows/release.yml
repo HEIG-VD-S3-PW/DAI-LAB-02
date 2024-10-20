@@ -1,0 +1,58 @@
+name: Maven Build and Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Build with Maven
+        run: ./mvnw clean package
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: 'v1.0.${{ github.run_number }}'
+          release_name: 'Release v1.0.${{ github.run_number }}'
+          draft: false
+          prerelease: false
+
+      - name: Upload DAI-LAB-02 artifact
+        run: |
+          mv target/DAI-LAB-02*.jar DAI-LAB-02.jar
+          echo "Releasing DAI-LAB-02.jar"
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./DAI-LAB-02.jar
+          asset_name: DAI-LAB-02.jar
+          asset_content_type: application/java-archive
