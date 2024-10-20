@@ -97,8 +97,12 @@ Arguments:
 
 Options:
   -a, --algorithm=<algorithm>
-                   The algorithm to use (possible values: , default value: AES).
+                   The algorithm to use (Possible values: DES, AES (Default:
+                     AES).
   -h, --help       Show this help message and exit.
+  -o, --output=<outputPath>
+                   The path of the output file. (Default: same directory as the
+                     input file).
   -p, --passphrase=<passphrase>
                    The passphrase to use (Will be randomly generated if left
                      empty).
@@ -133,6 +137,13 @@ If no passphrase is provided, a random one will be generated:
 java -jar target/pw-2-1.0-SNAPSHOT.jar -a=DES test.txt encrypt
 ```
 
+If you want to specify an output folder for the decrypted file, you can use the -o or --output option:
+
+```bash
+java -jar target/pw-2-1.0-SNAPSHOT.jar -a=DES -o=outputs test.txt encrypt
+```
+
+
 Output:
 
 ```arduino
@@ -146,6 +157,12 @@ To decrypt an encrypted file, specify just the file name and the passphrase used
 
 ```bash
 java -jar target/pw-2-1.0-SNAPSHOT.jar -p=mysecretpassphrase test.txt.des decrypt
+```
+
+If you want to specify an output folder for the decrypted file, you can use the -o or --output option:
+
+```bash
+java -jar target/pw-2-1.0-SNAPSHOT.jar -p=mysecretpassphrase -o=outputs test.txt.des decrypt
 ```
 
 Output:
@@ -163,6 +180,7 @@ File decrypted successfully using DES.
 | decrypt          | 	Decrypt a file using the specified algorithm and passphrase. |
 | -a, --algorithm  | 	The encryption algorithm to use (AES or DES).                |
 | -p, --passphrase | 	Passphrase for encryption/decryption.                        |
+| -o, --output     | 	Output folder                                                |
 | -h, --help       | 	Show help message and exit.                                  |
 | -V, --version    | 	Print version information and exit.                          |
 
@@ -196,6 +214,35 @@ Testing the application: You can also run the tests using Maven:
 
 ```bash
 mvn test
+```
+
+### Add a new encryption/decryption algorithm
+
+1) Create a new class that extends the `Algorithm` class.
+2) Implement the `encrypt` and `decrypt` methods. (_They return a byte array_)
+3) Add the algorithm name in the CLI help message.
+
+Example:
+
+```java
+public class MyAlgorithm extends Algorithm {
+
+    public MyAlgorithm() {
+      super("MyAlgorithm", "MyAlgorithm is an encryption algorithm.");
+    }
+  
+    @Override
+    public byte[] encrypt(byte[] data, String passphrase) {
+        // Implement the encryption logic
+        return new byte[0];
+    }
+
+    @Override
+    public byte[] decrypt(byte[] data, String passphrase) {
+        // Implement the decryption logic
+        return new byte[0];
+    }
+}
 ```
 
 ---

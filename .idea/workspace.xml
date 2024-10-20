@@ -14,7 +14,10 @@
   <component name="ChangeListManager">
     <list default="true" id="e36f94e3-d4ed-4140-b787-70e47d5aefd0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/heigvd/dai/algorithm/RandomPassphraseGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/heigvd/dai/algorithm/RandomPassphraseGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dependency-reduced-pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dependency-reduced-pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/heigvd/dai/commands/Root.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/heigvd/dai/commands/Root.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +66,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "bug/fix-bug-passphrase",
+    "git-widget-placeholder": "feature/add-output-parameter",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/mathieu/Desktop/DAI-LAB-02",
     "node.js.detected.package.eslint": "true",
@@ -74,6 +77,11 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
   <component name="RunManager" selected="Maven.Package application as JAR file">
     <configuration name="Run the application" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="ch.heigvd.dai.Main" />
@@ -173,6 +181,7 @@
       <workItem from="1729013364275" duration="1107000" />
       <workItem from="1729151402347" duration="5000" />
       <workItem from="1729241817809" duration="133000" />
+      <workItem from="1729363560814" duration="5911000" />
     </task>
     <servers />
   </component>

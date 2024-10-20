@@ -69,8 +69,9 @@ public class AES extends Algorithm {
             System.arraycopy(encryptedBytes, 0, ivAndEncrypted, iv.getIV().length, encryptedBytes.length);
 
             return ivAndEncrypted;
+
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("An unexpected error occurred during encryption: " + e.getMessage());
             return null;
         }
     }

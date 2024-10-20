@@ -48,9 +48,8 @@ public class DES extends Algorithm {
             Cipher cipher = Cipher.getInstance("DES");
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
             return cipher.doFinal(bytesToEncrypt); // Return encrypted byte array
-        }
-        catch(Exception e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("An unexpected error occurred during encryption: " + e.getMessage());
             return null;
         }
     }

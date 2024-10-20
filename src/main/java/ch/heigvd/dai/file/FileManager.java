@@ -53,6 +53,9 @@ public class FileManager {
                 new FileInputStream(inputPath.toFile()), 8192)) {
             // 8192 is the default buffer size used by BufferedInputStream
             this.data = bufferedInputStream.readAllBytes();
+        }catch (IOException e){
+            System.err.println("Error reading input file: " + e.getMessage());
+            throw e;
         }
     }
 
@@ -70,15 +73,23 @@ public class FileManager {
         Path outputPath = Paths.get(outputFileName);
         Path parentDir = outputPath.getParent();
 
-        // Create parent directories if they don't exist
-        if (parentDir != null && !Files.exists(parentDir)) {
-            Files.createDirectories(parentDir);
+        // Create parent directories if they don't exist (encapsulate, because createDirectories can throw an exception)
+        try {
+            if (parentDir != null && !Files.exists(parentDir)) {
+                Files.createDirectories(parentDir);
+            }
+        } catch (IOException e) {
+            System.err.println("Error creating parent directories: " + e.getMessage());
+            throw e;
         }
 
         try (BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(
                 new FileOutputStream(outputPath.toFile()), 8192)) {
             bufferedOutputStream.write(data);
             bufferedOutputStream.flush();
+        }catch (IOException e){
+            System.err.println("Error writing output file: " + e.getMessage());
+            throw e;
         }
     }
 
@@ -100,6 +111,16 @@ public class FileManager {
         } catch (IOException e) {
             System.err.println("Error deleting input file: " + e.getMessage());
         }
+    }
+
+    /**
+     * Checks if a path exists
+     * @param outputPath the path to check
+     * @return true if the path exists, false otherwise
+     */
+    public static boolean isPathValid(String outputPath) {
+        Path path = Paths.get(outputPath);
+        return Files.exists(path);
     }
 
 }
