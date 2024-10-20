@@ -26,7 +26,6 @@ A command-line utility to encrypt and decrypt files securely using AES or DES en
 
 ## Requirements
 - **Java**: You need to have Java 21 installed.
-- **Maven**: Ensure you have Maven installed to manage dependencies and build the project.
 
 ---
 
